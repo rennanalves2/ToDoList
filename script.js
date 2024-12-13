@@ -9,7 +9,19 @@ function renderTasks() {
     tasks.map((task) => {
         let liElement = document.createElement("li");
         let taskText = document.createTextNode(task);
+
+        let linkElement = document.createElement("a");
+        linkElement.setAttribute("href", "#");
+
+        let linkText = document.createTextNode(" Excluir");
+        linkElement.appendChild(linkText);
+
+        let position = tasks.indexOf(task);
+
+        linkElement.setAttribute("onclick", `deleteTask(${position})`);
+
         liElement.appendChild(taskText);
+        liElement.appendChild(linkElement);
         listElement.appendChild(liElement);
     });
 }
@@ -28,3 +40,8 @@ function addTasks() {
 }
 
 buttonElement.onclick = addTasks;
+
+function deleteTask(position) {
+    tasks.splice(position, 1);
+    renderTasks();
+}
