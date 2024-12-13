@@ -5,6 +5,12 @@ let buttonElement = document.querySelector("#app button");
 let tasks = JSON.parse(localStorage.getItem("@listTasks")) || [];
 
 function renderTasks() {
+    if(tasks.length === 0) {
+        listElement.setAttribute("style", "display: none");
+    }
+    else {
+        listElement.setAttribute("style", "display: block");
+    }
     listElement.innerHTML = "";
     tasks.map((task) => {
         let liElement = document.createElement("li");
@@ -13,7 +19,7 @@ function renderTasks() {
         let linkElement = document.createElement("a");
         linkElement.setAttribute("href", "#");
 
-        let linkText = document.createTextNode(" Excluir");
+        let linkText = document.createTextNode(">> Excluir");
         linkElement.appendChild(linkText);
 
         let position = tasks.indexOf(task);
@@ -48,6 +54,9 @@ function deleteTask(position) {
     tasks.splice(position, 1);
     renderTasks();
     saveData();
+    if(tasks.length === 0) {
+        listElement.setAttribute("style", "display: none");
+    }
 }
 
 function saveData() {
